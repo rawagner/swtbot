@@ -26,38 +26,39 @@ Authors:
 	</properties>
   
   <modules>
-	<module>org.eclipse.swtbot</module>
+  	<!-- Plugins -->
 	<module>org.eclipse.swtbot.ant.junit</module>
 	<module>org.eclipse.swtbot.eclipse</module>
 	<module>org.eclipse.swtbot.eclipse.core</module>
 	<module>org.eclipse.swtbot.eclipse.dsl</module>
 	<module>org.eclipse.swtbot.eclipse.finder</module>
-	<module>org.eclipse.swtbot.eclipse.gef</module>
 	<module>org.eclipse.swtbot.eclipse.gef.finder</module>
-	<module>org.eclipse.swtbot.eclipse.junit.headless</module>
 	<module>org.eclipse.swtbot.eclipse.spy</module>
 	<module>org.eclipse.swtbot.eclipse.test.junit</module>
 	<module>org.eclipse.swtbot.eclipse.ui</module>
-	<module>org.eclipse.swtbot.forms</module>
 	<module>org.eclipse.swtbot.forms.finder</module>
 	<module>org.eclipse.swtbot.generator</module>
 	<module>org.eclipse.swtbot.go</module>
-	<module>org.eclipse.swtbot.ide</module>
 	<module>org.eclipse.swtbot.junit4_x</module>
 	<module>org.eclipse.swtbot.swt.demo</module>
 	<module>org.eclipse.swtbot.swt.finder</module>
 	<module>org.eclipse.swt.examples</module>
 	<module>org.eclipse.ui.forms.examples</module>
-	
+	<!-- features -->
+	<module>org.eclipse.swtbot</module>
+	<module>org.eclipse.swtbot.forms</module>
+	<module>org.eclipse.swtbot.eclipse.gef</module>
+	<module>org.eclipse.swtbot.ide</module>
+	<module>org.eclipse.swtbot.eclipse.junit.headless</module>
+	<!-- Repo -->
 	<module>org.eclipse.swtbot.updatesite</module>
-	
 	<!-- Tests -->
-	<!-- module>org.eclipse.swtbot.eclipse.finder.test</module>
-	<module>org.eclipse.swtbot.forms.finder.test</module>
 	<module>org.eclipse.swtbot.generator.test</module>
 	<module>org.eclipse.swtbot.eclipse.ui.test</module>
 	<module>org.eclipse.swtbot.swt.finder.test</module>
-	<module>org.eclipse.swtbot.test</module-->
+	<module>org.eclipse.swtbot.forms.finder.test</module>
+	<module>org.eclipse.swtbot.eclipse.finder.test</module>
+	<module>org.eclipse.swtbot.test</module>
   </modules>
   
   	<mailingLists>

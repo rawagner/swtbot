@@ -23,4 +23,23 @@ Authors:
   	<version>2.0.5-SNAPSHOT</version>
   	<relativePath>../pom.xml</relativePath>
   </parent>
+  
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<argLine>-Xms64m -Xmx1024m -XX:MaxPermSize=128M -Dorg.eclipse.swtbot.search.timeout=10000</argLine>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>false</useUIThread>
+					<product>org.eclipse.sdk.ide</product>
+					<application>org.eclipse.ui.ide.workbench</application>
+					<testSuite>org.eclipse.swtbot.eclipse.ui.test</testSuite>
+					<testClass>org.eclipse.swtbot.eclipse.ui.functional.AllTests</testClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

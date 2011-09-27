@@ -30,7 +30,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.swtbot.eclipse.test.junit4"
+         id="org.eclipse.swtbot.eclipse.test.junit"
          version="0.0.0"/>
 
    <includes
