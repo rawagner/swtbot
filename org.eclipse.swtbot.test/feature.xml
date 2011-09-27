@@ -30,10 +30,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.swtbot.eclipse.test.junit3"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.swtbot.eclipse.test.junit4"
          version="0.0.0"/>
 
@@ -105,15 +101,7 @@
          fragment="true"/>
 
    <plugin
-         id="org.eclipse.swtbot.ant.optional.junit4"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.swtbot.ant.optional.junit3"
+         id="org.eclipse.swtbot.ant.junit"
          download-size="0"
          install-size="0"
          version="0.0.0"

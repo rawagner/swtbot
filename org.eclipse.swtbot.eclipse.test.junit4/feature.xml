@@ -19,15 +19,15 @@
 
    <requires>
       <import plugin="org.eclipse.core.runtime.compatibility"/>
-      <import plugin="org.junit4"/>
       <import plugin="org.apache.ant"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.equinox.app"/>
       <import plugin="org.eclipse.ui"/>
+      <import plugin="org.junit"/>
    </requires>
 
    <plugin
-         id="org.eclipse.swtbot.ant.optional.junit4"
+         id="org.eclipse.swtbot.ant.junit"
          download-size="0"
          install-size="0"
          version="0.0.0"
