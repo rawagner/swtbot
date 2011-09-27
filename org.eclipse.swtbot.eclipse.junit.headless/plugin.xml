@@ -7,7 +7,7 @@
       <application
             visible="false">
          <run
-               class="org.eclipse.swtbot.eclipse.junit4.headless.UITestApplication">
+               class="org.eclipse.swtbot.eclipse.junit.headless.UITestApplication">
             <parameter
                   name="productInfo"
                   value="product.ini">

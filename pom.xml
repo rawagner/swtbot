@@ -27,16 +27,16 @@ Authors:
   
   <modules>
 	<module>org.eclipse.swtbot</module>
-	<module>org.eclipse.swtbot.ant.optional.junit3</module>
+	<module>org.eclipse.swtbot.ant.junit</module>
 	<module>org.eclipse.swtbot.eclipse</module>
 	<module>org.eclipse.swtbot.eclipse.core</module>
 	<module>org.eclipse.swtbot.eclipse.dsl</module>
 	<module>org.eclipse.swtbot.eclipse.finder</module>
 	<module>org.eclipse.swtbot.eclipse.gef</module>
 	<module>org.eclipse.swtbot.eclipse.gef.finder</module>
-	<module>org.eclipse.swtbot.eclipse.junit4.headless</module>
+	<module>org.eclipse.swtbot.eclipse.junit.headless</module>
 	<module>org.eclipse.swtbot.eclipse.spy</module>
-	<module>org.eclipse.swtbot.eclipse.test.junit4</module>
+	<module>org.eclipse.swtbot.eclipse.test.junit</module>
 	<module>org.eclipse.swtbot.eclipse.ui</module>
 	<module>org.eclipse.swtbot.forms</module>
 	<module>org.eclipse.swtbot.forms.finder</module>

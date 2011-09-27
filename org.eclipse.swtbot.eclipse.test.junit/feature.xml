@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.swtbot.eclipse.test.junit4"
-      label="SWTBot JUnit 4.x Headless launchers for Eclipse (incubation)"
+      id="org.eclipse.swtbot.eclipse.test.junit"
+      label="SWTBot JUnit Headless launchers for Eclipse (incubation)"
       version="2.0.5.qualifier"
       provider-name="Eclipse.org">
 
@@ -35,7 +35,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.swtbot.eclipse.junit4.headless"
+         id="org.eclipse.swtbot.eclipse.junit.headless"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

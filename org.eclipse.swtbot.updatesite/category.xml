@@ -15,7 +15,7 @@
    <feature url="features/org.eclipse.swtbot.ide_2.0.5.qualifier.jar" id="org.eclipse.swtbot.ide" version="2.0.5.qualifier">
       <category name="SWTBot - IDE Integration"/>
    </feature>
-   <feature url="features/org.eclipse.swtbot.eclipse.test.junit4_2.0.5.qualifier.jar" id="org.eclipse.swtbot.eclipse.test.junit4" version="2.0.5.qualifier">
+   <feature url="features/org.eclipse.swtbot.eclipse.test.junit_2.0.5.qualifier.jar" id="org.eclipse.swtbot.eclipse.test.junit" version="2.0.5.qualifier">
       <category name="SWTBot - Headless Support"/>
    </feature>
    <category-def name="SWTBot - API" label="SWTBot - API"/>

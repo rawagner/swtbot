@@ -8,7 +8,7 @@
  * Contributors:
  *     Ketan Padegaonkar - initial API and implementation
  *******************************************************************************/
-package org.eclipse.swtbot.eclipse.junit4.headless;
+package org.eclipse.swtbot.eclipse.junit.headless;
 
 import java.io.IOException;
 
