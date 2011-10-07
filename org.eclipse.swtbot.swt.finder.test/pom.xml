@@ -25,7 +25,77 @@ Authors:
   </parent>
     <build>
 		<plugins>
+			<!-- plugin>
+				<!- Pure Java test: Uses keyboards layout from inside this jar ->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<phase>test</phase>
+						<id>SWTBot non-OSGi test</id>
+						<configuration>
+							<testSourceDirectory>${project.build.sourceDirectory}</testSourceDirectory>
+							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
+							<useSystemClassLoader>true</useSystemClassLoader>
+							<useManifestOnlyJar>false</useManifestOnlyJar>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<type>p2-installable-unit</type>
+						<artifactId>org.eclipse.swt</artifactId>
+						<version>0.0.0</version>
+					</dependency>
+					<dependency>
+						<type>p2-installable-unit</type>
+						<artifactId>org.eclipse.jface</artifactId>
+						<version>0.0.0</version>
+					</dependency>
+					<dependency>
+						<type>p2-installable-unit</type>
+						<artifactId>org.eclipse.swt.examples</artifactId>
+						<version>0.0.0</version>
+					</dependency>
+  					<dependency>
+						<type>p2-installable-unit</type>
+						<artifactId>org.eclipse.swtbot.swt.finder</artifactId>
+						<version>0.0.0</version>
+					</dependency>
+					<dependency>
+						<type>p2-installable-unit</type>
+						<artifactId>org.hamcrest</artifactId>
+						<version>0.0.0</version>
+					</dependency>
+					<dependency>
+						<type>p2-installable-unit</type>
+						<artifactId>org.apache.log4j</artifactId>
+						<version>1.2.13</version>
+					</dependency>
+					<dependency>
+						<type>p2-installable-unit</type>
+						<artifactId>org.junit</artifactId>
+						<version>4.8.2</version>
+					</dependency>
+					<dependency>
+						<type>p2-installable-unit</type>
+						<artifactId>org.eclipse.swtbot.junit4_x</artifactId>
+						<version>0.0.0</version>
+					</dependency>
+					<!-dependency>
+						<groupId>dummy</groupId>
+						<type>p2-installable-unit</type>
+						<artifactId>org.eclipse.swtbot.swt.finder.test.keyboards</artifactId>
+						<version>0.0.0</version>
+					</dependency->
+				</dependencies>
+			</plugin-->
 			<plugin>
+				<!-- OSGi/Eclipse hosted tests, use keyboard layouts from the fragment -->
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
@@ -35,6 +105,13 @@ Authors:
 					<useUIThread>true</useUIThread>
 					<product>org.eclipse.sdk.ide</product>
 					<application>org.eclipse.ui.ide.workbench</application>
+					<dependencies>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.swtbot.swt.finder.test.keyboards</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+					</dependencies>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -26,7 +26,7 @@ import org.hamcrest.SelfDescribing;
  */
 public class KeyboardFactory {
 
-	final Class<?>	strategyClass;
+	public final Class<?>	strategyClass;
 
 	/**
 	 * @param strategyClass the name of the class that is an instance of {@link KeyboardStrategy}.
