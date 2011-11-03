@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Ketan Padegaonkar - initial API and implementation
+ *     Mickael Istria (PetalsLink) - Bug 362476
  *******************************************************************************/
 package org.eclipse.swtbot.swt.finder.waits;
 
@@ -37,7 +38,7 @@ public class WaitForShellTest extends AbstractSWTTest {
 
 	@UIThread
 	public void runUIThread() {
-		new Display();
+		Display.getDefault();
 	}
 	
 	@SuppressWarnings("unchecked")
