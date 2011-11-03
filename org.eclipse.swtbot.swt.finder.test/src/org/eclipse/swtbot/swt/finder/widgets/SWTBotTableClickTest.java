@@ -47,12 +47,6 @@ public class SWTBotTableClickTest extends AbstractSWTTest {
 		shell.setLayout(new FillLayout());
 		new Snippet009CellEditors(shell);
 		shell.open ();
-		
-		while (!shell.isDisposed ()) {
-			if (!display.readAndDispatch ()) display.sleep ();
-		}
-		
-		display.dispose ();
 	}
 
 }

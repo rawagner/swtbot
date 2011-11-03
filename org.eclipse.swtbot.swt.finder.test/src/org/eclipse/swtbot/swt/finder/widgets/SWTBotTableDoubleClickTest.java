@@ -40,13 +40,6 @@ public class SWTBotTableDoubleClickTest extends AbstractSWTTest {
 		shell.setLayout(new FillLayout());
 		new Snippet052DoubleClickCellEditor(shell);
 		shell.open();
-
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-
-		display.dispose();
 	}
 
 }
