@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Cedric Chabanois - initial API and implementation
+ *     Mickael Istria (PetalsLink) - Fix bug 362476
  *******************************************************************************/
 package org.eclipse.swtbot.swt.finder.widgets;
 
