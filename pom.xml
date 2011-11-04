@@ -71,6 +71,10 @@
 		<url>https://bugs.eclipse.org/bugs/buglist.cgi?classification=Technology;query_format=advanced;product=SWTBot</url>
 		<system>Bugzilla</system>
 	</issueManagement>
+	
+	<scm>
+		<url>https://git.eclipse.org/c/swtbot/org.eclipse.swtbot.git/</url>
+	</scm>
 
 	<licenses>
 		<license>
@@ -139,6 +143,19 @@
 	</build>
 
 	<profiles>
+		<profile>
+			<id>jacoco</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<!-- Properties to enable jacoco code coverage analysis -->
+				<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+				<sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>
+			</properties>
+		</profile>
+	
 		<profile>
 			<id>helios</id>
 			<activation>
