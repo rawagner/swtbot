@@ -16,6 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
@@ -44,14 +45,14 @@ public class WaitForShellTest extends AbstractSWTTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void waitsForShellToAppear() throws Exception {
-		createShellAfter(100);
+		createShellAfter(500);
 		long start = System.currentTimeMillis();
 		Matcher<Shell> withText = withText(TEXT);
 		new SWTBot().waitUntil(Conditions.waitForShell(withText));
 		long end = System.currentTimeMillis();
 
 		int time = (int) (end - start);
-		assertThat(time, allOf(lessThan(800), greaterThanOrEqualTo(450)));
+		assertTrue(time > 500);
 	}
 
 	private void createShellAfter(int delay) {
