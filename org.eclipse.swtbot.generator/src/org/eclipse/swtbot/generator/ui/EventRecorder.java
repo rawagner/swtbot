@@ -8,7 +8,7 @@
  * Contributors:
  *    Mickael Istria (Red Hat) - initial API and implementation
  *******************************************************************************/
-package org.eclipse.swtbot.generator;
+package org.eclipse.swtbot.generator.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 
+@Deprecated
 public class EventRecorder implements Listener {
 
 	public static interface RecorderEventListener {
@@ -48,22 +49,8 @@ public class EventRecorder implements Listener {
 		if (!this.recording) {
 			return;
 		}
-		if (this.ignoredShell != null && this.ignoredShell.equals(getShell((Control)event.widget))) {
-			return;
-		}
 		this.allEvents.add(event);
 		notifyListeners();
-	}
-
-	private static Shell getShell(Control widget) {
-		while (widget != null) {
-			if (widget.getParent() == null) {
-				return (Shell)widget;
-			} else {
-				widget = ((Control)widget).getParent();
-			}
-		}
-		return null;
 	}
 
 	private void notifyListeners() {
@@ -82,10 +69,6 @@ public class EventRecorder implements Listener {
 
 	public List<Event> getToProcessEvents() {
 		return this.allEvents.subList(this.currentEventIndex, this.allEvents.size());
-	}
-
-	public void ignoreShell(Shell shell) {
-		this.ignoredShell = shell;
 	}
 
 }

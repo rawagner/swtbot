@@ -8,14 +8,9 @@
  * Contributors:
  *    Mickael Istria (Red Hat) - initial API and implementation
  *******************************************************************************/
-package org.eclipse.swtbot.generator;
+package org.eclipse.swtbot.generator.ui;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.Clipboard;
@@ -31,29 +26,25 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swtbot.generator.CodeGenerator.CodeGenerationListener;
-import org.eclipse.swtbot.generator.EventRecorder.RecorderEventListener;
+import org.eclipse.swtbot.generator.ui.BotGeneratorEventDispatcher.CodeGenerationListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 public class RecorderDialog extends TitleAreaDialog {
 
-	private EventRecorder recorder;
-	private CodeGenerator generator;
+	private BotGeneratorEventDispatcher recorder;
 
 	/**
 	 * Create the dialog.
 	 * @param parentShell
 	 */
-	public RecorderDialog(Shell parentShell, EventRecorder recorder, CodeGenerator generator) {
+	public RecorderDialog(Shell parentShell, BotGeneratorEventDispatcher recorder) {
 		super(parentShell);
 		setShellStyle(SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE | SWT.RESIZE | SWT.MAX);
 		setBlockOnOpen(false);
 		this.recorder = recorder;
-		this.generator = generator;
 	}
 
 	/**
@@ -67,15 +58,6 @@ public class RecorderDialog extends TitleAreaDialog {
 		area.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		SashForm container = new SashForm(area, SWT.VERTICAL);
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-		Composite eventComposite = new Composite(container, SWT.NONE);
-		eventComposite.setLayout(new GridLayout(1,false));
-		new Label(eventComposite, SWT.NONE).setText("Events");
-		SashForm eventsSash = new SashForm(eventComposite, SWT.HORIZONTAL);
-		eventsSash.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		final ListViewer eventsList = new ListViewer(eventsSash);
-		eventsList.setContentProvider(new ArrayContentProvider());
-		new Label(eventsSash, SWT.NONE).setText("TODO: Details");
 
 		Composite generatorComposite = new Composite(container, SWT.NONE);
 		generatorComposite.setLayout(new GridLayout(1, false));
@@ -98,19 +80,9 @@ public class RecorderDialog extends TitleAreaDialog {
 				recordPauseButton.setText(recorder.isReording() ? "Pause" : "Start Recording");
 			}
 		});
-		eventsList.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
-				updateDetailsForEvent(((IStructuredSelection)event.getSelection()).getFirstElement());
-			}
-		});
-		this.recorder.addListener(new RecorderEventListener() {
-			public void notifyRecorderEvent(EventRecorder recorder) {
-				eventsList.setInput(recorder.getAllEvents());
-			}
-		});
-		this.generator.addListener(new CodeGenerationListener() {
+		this.recorder.addListener(new CodeGenerationListener() {
 			public void handleCodeGenerated(String code) {
-				generatedCode.setText(generatedCode.getText() + code);
+				generatedCode.setText(generatedCode.getText() + code + ";\n");
 			}
 		});
 		copyButton.addSelectionListener(new SelectionAdapter() {
@@ -124,11 +96,6 @@ public class RecorderDialog extends TitleAreaDialog {
 		});
 
 		return area;
-	}
-
-	protected void updateDetailsForEvent(Object firstElement) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
