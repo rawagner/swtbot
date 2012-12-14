@@ -52,7 +52,6 @@
 		<!-- Repo -->
 		<module>org.eclipse.swtbot.updatesite</module>
 		<!-- Tests -->
-		<module>org.eclipse.swtbot.generator.test</module>
 		<module>org.eclipse.swtbot.eclipse.ui.test</module>
 		<module>org.eclipse.swtbot.swt.finder.test.keyboards</module>
 		<module>org.eclipse.swtbot.swt.finder.test</module>

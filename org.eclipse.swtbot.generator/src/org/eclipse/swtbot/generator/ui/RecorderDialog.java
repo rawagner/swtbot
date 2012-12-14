@@ -10,9 +10,17 @@
  *******************************************************************************/
 package org.eclipse.swtbot.generator.ui;
 
+import java.util.List;
+
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -26,25 +34,30 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swtbot.generator.framework.Generator;
 import org.eclipse.swtbot.generator.ui.BotGeneratorEventDispatcher.CodeGenerationListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.omg.CORBA.StructMember;
 
 public class RecorderDialog extends TitleAreaDialog {
 
 	private BotGeneratorEventDispatcher recorder;
+	private List<Generator> availableGenerators;
 
 	/**
 	 * Create the dialog.
 	 * @param parentShell
 	 */
-	public RecorderDialog(Shell parentShell, BotGeneratorEventDispatcher recorder) {
+	public RecorderDialog(Shell parentShell, BotGeneratorEventDispatcher recorder, List<Generator> availableGenerators) {
 		super(parentShell);
 		setShellStyle(SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE | SWT.RESIZE | SWT.MAX);
 		setBlockOnOpen(false);
 		this.recorder = recorder;
+		this.availableGenerators = availableGenerators;
 	}
 
 	/**
@@ -54,17 +67,34 @@ public class RecorderDialog extends TitleAreaDialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		setTitle("SWTBot Test Recorder");
-		Composite area = (Composite) super.createDialogArea(parent);
-		area.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		SashForm container = new SashForm(area, SWT.VERTICAL);
-		container.setLayoutData(new GridData(GridData.FILL_BOTH));
+		Composite container = (Composite) super.createDialogArea(parent);
+		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		container.setLayout(new GridLayout(1, false));
 
-		Composite generatorComposite = new Composite(container, SWT.NONE);
-		generatorComposite.setLayout(new GridLayout(1, false));
-		final Text generatedCode = new Text(generatorComposite, SWT.MULTI);
+		Composite generatorSelectionContainer = new Composite(container, SWT.NONE);
+		generatorSelectionContainer.setLayout(new RowLayout());
+		new Label(generatorSelectionContainer, SWT.NONE).setText("Target Bot API:");
+		ComboViewer comboViewer = new ComboViewer(generatorSelectionContainer);
+		comboViewer.setContentProvider(new ArrayContentProvider());
+		comboViewer.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object o) {
+				return ((Generator)o).getLabel();
+			}
+		});
+		comboViewer.setInput(this.availableGenerators);
+		comboViewer.setSelection(new StructuredSelection(this.recorder.getCurrentGenerator()));
+		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				Generator newGenerator = (Generator) ((IStructuredSelection)event.getSelection()).getFirstElement();
+				recorder.setGenerator(newGenerator);
+			}
+		});
+
+		final Text generatedCode = new Text(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		generatedCode.setText("TODO: generated code\n");
 		generatedCode.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		Composite actionsComposite = new Composite(generatorComposite, SWT.NONE);
+		Composite actionsComposite = new Composite(container, SWT.NONE);
 		actionsComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
 
 		final Button recordPauseButton = new Button(actionsComposite, SWT.PUSH);
@@ -95,7 +125,7 @@ public class RecorderDialog extends TitleAreaDialog {
 			}
 		});
 
-		return area;
+		return container;
 	}
 
 	@Override

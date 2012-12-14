@@ -23,10 +23,17 @@ import org.eclipse.ui.PlatformUI;
 
 public class StartupRecorder implements IStartup {
 
+	private static final String ENABLEMENT_PROPERTY = "org.eclipse.swtbot.generator.enable";
+
 	public void earlyStartup() {
-		List<Generator> availableGenerators = GeneratorExtensionPointManager.loadGenerators();
+		if (Boolean.parseBoolean(System.getProperty(ENABLEMENT_PROPERTY)) != true) {
+			return;
+		}
+
+		final List<Generator> availableGenerators = GeneratorExtensionPointManager.loadGenerators();
 		Generator generator = availableGenerators.get(0);
-		final BotGeneratorEventDispatcher dispatcher = new BotGeneratorEventDispatcher(generator);
+		final BotGeneratorEventDispatcher dispatcher = new BotGeneratorEventDispatcher();
+		dispatcher.setGenerator(generator);
 
 		final Display display = PlatformUI.getWorkbench().getDisplay();
 
@@ -43,7 +50,7 @@ public class StartupRecorder implements IStartup {
 				Shell recorderShell = new Shell(PlatformUI.getWorkbench().getDisplay(), SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
 				recorderShell.setText("SWTBot test recorder");
 				dispatcher.ignoreShell(recorderShell);
-				RecorderDialog recorderDialog = new RecorderDialog(recorderShell, dispatcher);
+				RecorderDialog recorderDialog = new RecorderDialog(recorderShell, dispatcher, availableGenerators);
 				recorderDialog.open();
 				recorderDialog.getShell().addShellListener(new ShellAdapter() {
 					public void shellClosed(ShellEvent e) {

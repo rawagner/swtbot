@@ -27,12 +27,14 @@ public class BotGeneratorEventDispatcher implements Listener {
 		public void handleCodeGenerated(String code);
 	}
 
+	private Generator generator;
 	private List<GenerationRule> generationRules;
 	private List<CodeGenerationListener> listeners = new ArrayList<CodeGenerationListener>();
 	private Shell ignoredShell;
 	private boolean recording;
 
-	public BotGeneratorEventDispatcher(Generator generator) {
+	public void setGenerator(Generator generator)  {
+		this.generator = generator;
 		this.generationRules = generator.createRules();
 	}
 
@@ -81,6 +83,10 @@ public class BotGeneratorEventDispatcher implements Listener {
 
 	public void switchRecording() {
 		this.recording = !this.recording;
+	}
+
+	public Generator getCurrentGenerator() {
+		return this.generator;
 	}
 
 }
