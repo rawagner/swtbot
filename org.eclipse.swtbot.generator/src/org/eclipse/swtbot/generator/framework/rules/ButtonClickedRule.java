@@ -19,8 +19,8 @@ public class ButtonClickedRule extends GenerationRule {
 	@Override
 	public void initializeForEvent(Event event) {
 		this.buttonText = ((Button)event.widget).getText();
-		if (buttonText == null) {
-			this.index = WidgetUtils.getIndex(event.widget);
+		if (this.buttonText == null) {
+			this.index = WidgetUtils.getIndex((Button)event.widget);
 		}
 	}
 

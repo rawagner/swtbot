@@ -15,6 +15,7 @@ public class SWTBotGeneratorRules implements Generator {
 		res.add(new DoubleClickTreeItemRule());
 		res.add(new MenuClickedRule());
 		res.add(new SelectTreeItemRule());
+		res.add(new ModifyTextRule());
 		return res;
 	}
 

@@ -7,13 +7,14 @@
  *
  * Contributors:
  *    Mickael Istria (Red Hat) - initial API and implementation
- *    Rasta TODO (Red Hat) - initial API and implementation
+ *    Rastislav Wagner (Red Hat) - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swtbot.generator.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -32,6 +33,7 @@ public class BotGeneratorEventDispatcher implements Listener {
 	private List<CodeGenerationListener> listeners = new ArrayList<CodeGenerationListener>();
 	private Shell ignoredShell;
 	private boolean recording;
+	private Event lastModifyEvent;
 
 	public void setGenerator(Generator generator)  {
 		this.generator = generator;
@@ -42,7 +44,33 @@ public class BotGeneratorEventDispatcher implements Listener {
 		if (this.ignoredShell != null && event.widget instanceof Control && this.ignoredShell.equals(getShell((Control)event.widget))) {
 			return;
 		}
-		for (GenerationRule rule : generationRules) {
+
+//		A LOT of events happen between different modifies, so it's not possible to reuse the lastModifyEvent that way
+//		We should check whether an event was supported by another rule between 2 modifies.
+//		If yes => It's  a new setText, apply setText rule if any
+//		If no => It's still the same setText, event is stored for later
+		if (this.lastModifyEvent != null) {
+			if (event.type != SWT.Modify || event.widget != this.lastModifyEvent.widget) {
+				processRules(this.lastModifyEvent);
+				this.lastModifyEvent = null;
+			}
+		}
+		if (event.type == SWT.Modify) {
+			Control control = (Control)event.widget;
+			if (! (control.isFocusControl() && control.isEnabled() && control.isVisible())) {
+				return; //ignore Modify events without focus
+			} else if (this.lastModifyEvent == null || this.lastModifyEvent.widget == control) {
+				this.lastModifyEvent = event;
+				// Store for later usage so it can be overriden if a newer ModifyEvent on samme widget happen
+				return;
+			}
+		}
+
+		processRules(event);
+	}
+
+	private void processRules(Event event) {
+		for (GenerationRule rule : this.generationRules) {
 			if (rule.appliesTo(event)) {
 				rule.initializeForEvent(event);
 				//rule.setPreviousEvent()

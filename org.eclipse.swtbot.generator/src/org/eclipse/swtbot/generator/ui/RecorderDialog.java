@@ -41,7 +41,6 @@ import org.eclipse.swtbot.generator.framework.Generator;
 import org.eclipse.swtbot.generator.ui.BotGeneratorEventDispatcher.CodeGenerationListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.omg.CORBA.StructMember;
 
 public class RecorderDialog extends TitleAreaDialog {
 
@@ -72,8 +71,10 @@ public class RecorderDialog extends TitleAreaDialog {
 		container.setLayout(new GridLayout(1, false));
 
 		Composite generatorSelectionContainer = new Composite(container, SWT.NONE);
-		generatorSelectionContainer.setLayout(new RowLayout());
-		new Label(generatorSelectionContainer, SWT.NONE).setText("Target Bot API:");
+		generatorSelectionContainer.setLayout(new GridLayout(2, false));
+		Label selectorLabel = new Label(generatorSelectionContainer, SWT.NONE);
+		selectorLabel.setText("Target Bot API:");
+		selectorLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 		ComboViewer comboViewer = new ComboViewer(generatorSelectionContainer);
 		comboViewer.setContentProvider(new ArrayContentProvider());
 		comboViewer.setLabelProvider(new LabelProvider() {

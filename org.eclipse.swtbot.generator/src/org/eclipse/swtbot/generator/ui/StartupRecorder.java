@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mickael Istria (Red Hat) - initial API and implementation
+ *    Rastislav Wagner (Red Hat) - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swtbot.generator.ui;
 
@@ -41,12 +42,13 @@ public class StartupRecorder implements IStartup {
 			public void run() {
 				display.addFilter(SWT.Activate, dispatcher);
 				display.addFilter(SWT.Close, dispatcher);
-				display.addFilter(SWT.MouseDown, dispatcher);
-				display.addFilter(SWT.MouseDoubleClick, dispatcher);
-				display.addFilter(SWT.MouseUp, dispatcher);
-				display.addFilter(SWT.KeyDown, dispatcher);
+//				display.addFilter(SWT.MouseDown, dispatcher);
+//				display.addFilter(SWT.MouseDoubleClick, dispatcher);
+//				display.addFilter(SWT.MouseUp, dispatcher);
+//				display.addFilter(SWT.KeyDown, dispatcher);
 				display.addFilter(SWT.Selection, dispatcher);
 				display.addFilter(SWT.Expand, dispatcher);
+				display.addFilter(SWT.Modify, dispatcher);
 				Shell recorderShell = new Shell(PlatformUI.getWorkbench().getDisplay(), SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
 				recorderShell.setText("SWTBot test recorder");
 				dispatcher.ignoreShell(recorderShell);
@@ -62,6 +64,7 @@ public class StartupRecorder implements IStartup {
 						display.removeFilter(SWT.KeyDown, dispatcher);
 						display.removeFilter(SWT.Selection, dispatcher);
 						display.removeFilter(SWT.Expand, dispatcher);
+						display.removeFilter(SWT.Modify, dispatcher);
 					}
 				});
 			}
