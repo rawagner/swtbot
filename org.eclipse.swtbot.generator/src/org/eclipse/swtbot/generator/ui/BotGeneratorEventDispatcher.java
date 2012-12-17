@@ -44,12 +44,18 @@ public class BotGeneratorEventDispatcher implements Listener {
 		if (this.ignoredShell != null && event.widget instanceof Control && this.ignoredShell.equals(getShell((Control)event.widget))) {
 			return;
 		}
+		if (event.widget instanceof Control &&
+			! (((Control)event.widget).isFocusControl() && ((Control)event.widget).isVisible() && ((Control)event.widget).isEnabled())) {
+			return;
+		}
 
-//		A LOT of events happen between different modifies, so it's not possible to reuse the lastModifyEvent that way
-//		We should check whether an event was supported by another rule between 2 modifies.
-//		If yes => It's  a new setText, apply setText rule if any
-//		If no => It's still the same setText, event is stored for later
+		/* Excpetion 1: Modify Events are a stream, only last one is interesting
+		We should check whether an event was supported by another rule between 2 modifies.
+		If yes => It's  a new setText, apply setText rule if any
+		If no => It's still the same setText, event is stored for later
+		 */
 		if (this.lastModifyEvent != null) {
+			// unrelated event
 			if (event.type != SWT.Modify || event.widget != this.lastModifyEvent.widget) {
 				processRules(this.lastModifyEvent);
 				this.lastModifyEvent = null;
@@ -57,9 +63,8 @@ public class BotGeneratorEventDispatcher implements Listener {
 		}
 		if (event.type == SWT.Modify) {
 			Control control = (Control)event.widget;
-			if (! (control.isFocusControl() && control.isEnabled() && control.isVisible())) {
-				return; //ignore Modify events without focus
-			} else if (this.lastModifyEvent == null || this.lastModifyEvent.widget == control) {
+			// new event or next one on same widget
+			if (this.lastModifyEvent == null || this.lastModifyEvent.widget == control) {
 				this.lastModifyEvent = event;
 				// Store for later usage so it can be overriden if a newer ModifyEvent on samme widget happen
 				return;

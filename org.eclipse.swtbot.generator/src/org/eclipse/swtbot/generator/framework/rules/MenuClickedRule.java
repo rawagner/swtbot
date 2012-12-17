@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Red Hat Inc..
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Mickael Istria (Red Hat) - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.swtbot.generator.framework.rules;
 
 import java.util.ArrayList;
@@ -28,13 +38,13 @@ public class MenuClickedRule extends GenerationRule {
 	protected String getWidgetAccessor() {
 		StringBuilder code = new StringBuilder();
 		List<String> path = new ArrayList<String>();
-		path.add(this.item.getText());
+		path.add(cleanMenuText(this.item.getText()));
 		MenuItem currentItem = this.item;
 		Menu parent = null;
 		while (currentItem != null && (parent = currentItem.getParent()) != null) {
 			currentItem = parent.getParentItem();
 			if (currentItem != null && currentItem.getText() != null) {
-				path.add(currentItem.getText());
+				path.add(cleanMenuText(currentItem.getText()));
 			}
 		}
 		Collections.reverse(path);
@@ -45,6 +55,10 @@ public class MenuClickedRule extends GenerationRule {
 			code.append("\")");
 		}
 		return code.toString();
+	}
+
+	private static String cleanMenuText(String text) {
+		return text.replace("&", "").split("\t")[0];
 	}
 
 	@Override

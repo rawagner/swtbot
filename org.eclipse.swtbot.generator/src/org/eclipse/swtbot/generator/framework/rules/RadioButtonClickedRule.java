@@ -10,47 +10,44 @@
  *******************************************************************************/
 package org.eclipse.swtbot.generator.framework.rules;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swtbot.generator.framework.GenerationRule;
 import org.eclipse.swtbot.generator.framework.WidgetUtils;
 
-public abstract class AbstractTreeGenerationRule extends GenerationRule {
+public class RadioButtonClickedRule extends GenerationRule {
 
-	private Tree tree;
-	private TreeItem item;
+	private String buttonText;
+	private int index;
 
-	/**
-	 * Subclasses should call super.appliesTo first, and then
-	 * verify their conditions
-	 * @param event
-	 * @return
-	 */
 	@Override
 	public boolean appliesTo(Event event) {
-		return event.widget instanceof Tree && event.item instanceof TreeItem;
+		return event.widget instanceof Button &&
+				(((Button)event.widget).getStyle() & SWT.CHECK) != 0
+				&& event.type == SWT.Selection;
 	}
 
 	@Override
 	public void initializeForEvent(Event event) {
-		this.tree = (Tree)event.widget;
-		this.item = (TreeItem)event.item;
+		this.buttonText = ((Button)event.widget).getText().replace("&", "");
+		if (this.buttonText == null) {
+			this.index = WidgetUtils.getIndex((Button)event.widget);
+		}
 	}
 
 	@Override
 	protected String getWidgetAccessor() {
-		StringBuilder res = new StringBuilder();
-		res.append("bot.tree(");
-		int index = WidgetUtils.getIndex(this.tree);
-		if (index != 0) {
-			res.append(index);
+		if (this.buttonText != null) {
+			return "bot.checkBox(\"" + this.buttonText + "\")";
+		} else {
+			return "bot.checkBox(" + this.index + ")";
 		}
-		res.append(")");
-		TreeItem current = this.item;
-		res.append(".getTreeItem(\"");
-		res.append(current.getText());
-		res.append("\")");
-		return res.toString();
 	}
+
+	@Override
+	protected String getActon() {
+		return ".click()";
+	}
+
 }
