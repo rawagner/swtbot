@@ -32,7 +32,7 @@ public class BotGeneratorEventDispatcher implements Listener {
 	private List<GenerationRule> generationRules;
 	private List<CodeGenerationListener> listeners = new ArrayList<CodeGenerationListener>();
 	private Shell ignoredShell;
-	private boolean recording;
+	private boolean recording=false; //recording is stopped at the beginning
 	private Event lastModifyEvent;
 
 	public void setGenerator(Generator generator)  {
@@ -41,6 +41,9 @@ public class BotGeneratorEventDispatcher implements Listener {
 	}
 
 	public void handleEvent(Event event) {
+		if(!recording){
+			return;
+		}
 		if (this.ignoredShell != null && event.widget instanceof Control && this.ignoredShell.equals(getShell((Control)event.widget))) {
 			return;
 		}
@@ -110,7 +113,7 @@ public class BotGeneratorEventDispatcher implements Listener {
 		this.ignoredShell = shell;
 	}
 
-	public boolean isReording() {
+	public boolean isRecording() {
 		return this.recording;
 	}
 
