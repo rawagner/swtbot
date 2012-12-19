@@ -13,6 +13,7 @@ package org.eclipse.swtbot.generator.framework;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 public class WidgetUtils {
@@ -37,6 +38,18 @@ public class WidgetUtils {
 		} while(!(parent instanceof Shell));
 
 		throw new RuntimeException("Could not determine index for widget " + control);
+	}
+	
+	public static String getGroup(Control control){
+		Composite parent = control.getParent();
+		while(parent != null){
+			if(parent instanceof Group){
+				return ((Group)parent).getText();
+			}
+			parent = parent.getParent();
+		}
+
+		return null;
 	}
 
 }
