@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swtbot.generator.framework.GenerationRule;
+import org.eclipse.swtbot.generator.framework.GenerationStackRule;
 import org.eclipse.swtbot.generator.framework.Generator;
 
 public class SWTBotGeneratorRules implements Generator {
@@ -36,4 +37,13 @@ public class SWTBotGeneratorRules implements Generator {
 	public String getLabel() {
 		return "SWTBot";
 	}
+
+	public List<GenerationStackRule> createStackRules() {
+		return null;
+	}
+
+	public boolean useStacks() {
+		return false;
+	}
 }
+

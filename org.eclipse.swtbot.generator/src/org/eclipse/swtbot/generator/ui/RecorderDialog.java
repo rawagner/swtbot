@@ -89,6 +89,7 @@ public class RecorderDialog extends TitleAreaDialog {
 			public void selectionChanged(SelectionChangedEvent event) {
 				Generator newGenerator = (Generator) ((IStructuredSelection)event.getSelection()).getFirstElement();
 				recorder.setGenerator(newGenerator);
+				recorder.useStacks(newGenerator.useStacks());
 			}
 		});
 		

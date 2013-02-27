@@ -16,6 +16,8 @@ import java.util.List;
 public interface Generator {
 
 	public List<GenerationRule> createRules();
+	public List<GenerationStackRule> createStackRules();
 	public String getLabel();
+	public boolean useStacks();
 
 }
